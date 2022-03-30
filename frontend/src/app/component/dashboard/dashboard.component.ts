@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { Task } from 'src/app/model/task';
 import { CrudService } from 'src/app/service/crud.service';
 
@@ -10,8 +10,10 @@ import { CrudService } from 'src/app/service/crud.service';
 })
 export class DashboardComponent implements OnInit {
 
+  private subject = new BehaviorSubject<Task[]>([])
+  taskArr$: Observable<Task[]> = this.subject.asObservable()
+
   taskObj:Task=new Task()
-  taskArr:Task[]=[]
 
   addTaskValue:string=''
   editTaskValue:string=''
@@ -20,7 +22,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.taskObj = new Task();
-    this.taskArr = []
+    this.subject = new BehaviorSubject<Task[]>([])
+    this.taskArr$ = this.subject.asObservable()
     this.getAllTasks()
   }
 
@@ -35,8 +38,7 @@ export class DashboardComponent implements OnInit {
           })
         }),
         tap(tasks => {
-          this.taskArr = tasks
-          console.log(this.taskArr)
+          this.subject.next(tasks)
         })
       )
       .subscribe()

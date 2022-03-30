@@ -19,6 +19,9 @@
                 <h4 class="text-primary mt-4">Tasks : </h4>
 
                 <div style="overflow-y: auto; height: 350px;">
+
+                  <ng-container *ngIf="(taskArr$|async) as taskArr">
+
                     <div class="m-3" *ngFor="let task of taskArr">
                         <div class="p-2 shadow border" id="tasks" >
                             <div class="input-group row ps-3" >
@@ -28,6 +31,9 @@
                             </div>
                         </div>
                     </div>
+
+                  </ng-container>
+
                 </div>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
