@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addTask(){
-    this.taskObj.task_name = this.addTaskValue
+    this.taskObj.content = this.addTaskValue
     this.crudService.addTask(this.taskObj)
       .pipe(
         catchError(err => {
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
   }
 
   editTask(){
-    this.taskObj.task_name = this.editTaskValue
+    this.taskObj.content = this.editTaskValue
     this.crudService.editTask(this.taskObj)
       .pipe(
         catchError(err => {
@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
 
   call(task: Task){
     this.taskObj = task
-    this.editTaskValue = task.task_name
+    this.editTaskValue = task.content
   }
 
 }
