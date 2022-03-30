@@ -42,6 +42,14 @@ app.post('/tasks', (req,res)=>{
 
 })
 
+app.put('/tasks/:taskId', (req,res)=>{
+    const taskId = req.params.taskId
+    
+    Task.findOneAndUpdate({_id: taskId},{$set:req.body})
+        .then(() => res.status(204).send("Task updated !"))
+        .catch((e)=>res.status(400).send(e))
+})
+
 
 
 app.listen(3000, ()=>{
