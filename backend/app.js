@@ -21,7 +21,7 @@ app.get('/tasks', (req,res)=>{
             res.status(200).send(tasks)
         })
         .catch(e=>{
-            res.status(400).send(e)
+            res.status(500).send(e)
         })
 })
 
@@ -37,7 +37,7 @@ app.post('/tasks', (req,res)=>{
             res.status(201).send(taskDoc)
         })
         .catch(e =>{
-            res.status(400).send(e)
+            res.status(500).send(e)
         })
 
 })
@@ -47,9 +47,16 @@ app.put('/tasks/:taskId', (req,res)=>{
     
     Task.findOneAndUpdate({_id: taskId},{$set:req.body})
         .then(() => res.status(204).send("Task updated !"))
-        .catch((e)=>res.status(400).send(e))
+        .catch((e)=>res.status(500).send(e))
 })
 
+app.delete('/tasks/:taskId', (req,res)=>{
+    const taskId = req.params.taskId
+    
+    Task.findOneAndRemove({_id: taskId})
+        .then(() => res.status(204).send("Task deleted !"))
+        .catch((e)=>res.status(500).send(e))
+})
 
 
 app.listen(3000, ()=>{
