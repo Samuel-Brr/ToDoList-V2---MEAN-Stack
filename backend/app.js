@@ -25,6 +25,23 @@ app.get('/tasks', (req,res)=>{
         })
 })
 
+app.post('/tasks', (req,res)=>{
+    const content = req.body.content
+
+    const newTask = new Task({
+        content
+    })
+
+    newTask.save()
+        .then(taskDoc =>{
+            res.status(201).send(taskDoc)
+        })
+        .catch(e =>{
+            res.status(400).send(e)
+        })
+
+})
+
 
 
 app.listen(3000, ()=>{
