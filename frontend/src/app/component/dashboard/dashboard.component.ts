@@ -26,11 +26,19 @@ export class DashboardComponent implements OnInit {
 
 
   getAllTasks() {
-    this.crudService.getAllTasks().subscribe((res)=>{
-      this.taskArr = res
-    }, err=>{
-      alert("Unable to get list of tasks")
-    })
+    this.crudService.getAllTasks()
+      .pipe(
+        catchError(err => {
+          return throwError(() => {
+            new Error(err)
+            alert("Unable to get list of tasks")
+          })
+        }),
+        tap(tasks => {
+          this.taskArr = tasks
+        })
+      )
+      .subscribe()
   }
 
   addTask(){
