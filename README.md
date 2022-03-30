@@ -6,9 +6,11 @@ npm install
 
 ng serve -o
 
-## Dans un second terminale toujours dans le dossier frontend lancer:
+## Dans un second terminale dans le dossier backend lancer:
 
-json-server 
+npm install
 
-(si cette commande ne fonctionne pas vérifier l'installation de json server sur votre machine
-avec la commande:npm json-server install -g)
+connectez vous à une base de données mongoDb dans le fichier /backend/database/mongoose.js
+
+nodemon.app.js 
+
