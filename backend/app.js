@@ -99,7 +99,7 @@ app.post('/connexion',(req, res, next) => {
                 req.session.user = user;
                 return req.session.save(err => {
                   console.log(err);
-                  res.status(200).send("Utilisateur connecté")
+                  res.status(200).send(user)
                 });
               }
               console.log(user)

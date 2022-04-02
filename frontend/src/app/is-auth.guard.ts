@@ -14,15 +14,15 @@ export class IsAuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot):boolean |  Observable<boolean | UrlTree> {
 
-        // return this.checkIfAuthenticated()
-        return true
+        return this.checkIfAuthenticated()
+
   }
 
   private checkIfAuthenticated() {
     return this.auth.isLoggedIn$
                 .pipe(
                   map(loggedIn =>
-                      loggedIn? true: this.router.parseUrl('/login'))
+                      loggedIn? true: this.router.parseUrl('/connexion'))
                 )
   }
 
