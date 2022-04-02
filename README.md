@@ -11,7 +11,7 @@ ng serve -o
 npm install
 
 connectez vous à une base de données mongoDb dans un fichier .env (à la racine du backend) format:
-DB_STRING='mongodb+srv://<<id:password>>@cluster0.jt4fy.mongodb.net/<Database-name>?retryWrites=true&w=majority'
+DB_STRING='mongodb+srv://<<id:password>>@cluster0.jt4fy.mongodb.net/<>Database-name<>?retryWrites=true&w=majority'
 SECRET="random-very-long-string"
 
 nodemon.app.js 
