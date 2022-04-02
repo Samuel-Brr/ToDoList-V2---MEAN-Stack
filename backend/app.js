@@ -7,6 +7,7 @@ const session = require("express-session")
 const MongoDBStore = require("connect-mongodb-session")(session)
 require("dotenv").config()
 const Utilisateur = require('./database/models/utilisateur.model')
+const bcrypt = require('bcrypt')
 
 
 const app = express() //App starts here
@@ -28,9 +29,50 @@ app.use(session({          //Parametrage de la session utilisateur
     store: store})
 )
 
+app.use((req, res, next) => {
+    if (!req.session.user) {   //Si il n y a pas de session en cours continuer sans rien faire
+      return next();
+    }
+    Utilisateur.findById(req.session.user._id)
+      .then(user => {
+        req.user = user;   // Si il y a une session en cours l'utilisateur de la session devient un model mongoose
+        next();
+      })
+      .catch(err => console.log(err));
+});
+
 /* END MIDDLEWARE ⬆ */
 
+//auth routes
 
+app.post('/inscription', (req,res,next) => {
+    const email = req.body.email
+    const password = req.body.password
+    // const errors = validationResult(req)
+  
+    // if(!errors.isEmpty()){
+    //   return res.status(422).render('auth/inscription', {
+    //     pageTitle: 'Inscription',
+    //     path: '/auth/inscription',
+    //     errorMessage: errors.array()[0].msg
+    //   });
+    // }
+  
+    bcrypt.hash(password,12)
+      .then(hashedPassword => {
+        const utilisateur = new Utilisateur({
+          email: email,
+          password: hashedPassword
+        })
+      
+        utilisateur.save()
+        res.status(201).send("Utilisateur créé")
+      })
+  
+  }
+  )
+
+//task routes
 app.get('/tasks', (req,res)=>{
     Task.find()
         .then(tasks =>{
