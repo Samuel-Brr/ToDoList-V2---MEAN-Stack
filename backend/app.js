@@ -66,7 +66,7 @@ app.post('/inscription', (req,res,next) => {
         })
       
         utilisateur.save()
-        res.status(201).send("Utilisateur créé")
+        res.status(201).send(utilisateur)
       })
   
 })

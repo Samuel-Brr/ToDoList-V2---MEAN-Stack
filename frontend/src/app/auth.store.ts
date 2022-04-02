@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../app/model/user.model';
 import {map, shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
 
 const AUTH_DATA = "auth_data";
 
@@ -34,11 +35,10 @@ export class AuthStore {
 
 
     signup(email:string, password:string): Observable<User> {
-      return this.http.post<User>("/api/inscription", {email, password})
+      return this.http.post<User>("http://localhost:3000/inscription", {email, password})
           .pipe(
               tap(user => {
-                  this.subject.next(user);
-                  localStorage.setItem(AUTH_DATA, JSON.stringify(user));
+                console.log(user)
               }),
               shareReplay()
           );

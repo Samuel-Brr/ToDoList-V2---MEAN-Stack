@@ -4,11 +4,11 @@
 
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Mot de passe">
-      <input type="text" id="passwordconfirm" class="fadeIn third" name="login" placeholder="Confirmation mot de passe">
-      <input type="submit" class="fadeIn fourth" value="Inscription">
+    <form [formGroup]="form">
+      <input type="text" id="login" class="fadeIn second" formControlName="email" placeholder="Email">
+      <input type="text" id="password" class="fadeIn third" formControlName="mdp" placeholder="Mot de passe">
+      <input type="text" id="passwordconfirm" class="fadeIn third" formControlName="confirmMdp" placeholder="Confirmation mot de passe">
+      <button  class="fadeIn fourth" [disabled]="!form.valid" (click)="inscription(form)" >Inscription</button>
     </form>
 
     <!-- Remind Passowrd -->
