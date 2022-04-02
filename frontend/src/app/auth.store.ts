@@ -46,7 +46,7 @@ export class AuthStore {
 
 
     login(email:string, password:string): Observable<User> {
-        return this.http.post<User>("/api/login", {email, password})
+        return this.http.post<User>("http://localhost:3000/connexion", {email, password})
             .pipe(
                 tap(user => {
                     this.subject.next(user);
