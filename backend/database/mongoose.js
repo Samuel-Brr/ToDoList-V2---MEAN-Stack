@@ -1,6 +1,7 @@
 // This file will handle connection logic to Mongodb
+require('dotenv').config()
 
-const MONGODB_URI = 'mongodb+srv://Sml-Brr:YVmG4mNq24wxbku2@cluster0.jt4fy.mongodb.net/toDoListV2?retryWrites=true&w=majority'
+const MONGODB_URI = process.env.DB_STRING;
 const mongoose = require('mongoose')
 
 mongoose.connect(MONGODB_URI)

@@ -5,14 +5,28 @@ const { mongoose } = require('./database/mongoose')
 const { Task } = require('./database/models/task.model')
 const session = require("express-session")
 const MongoDBStore = require("connect-mongodb-session")(session)
+require("dotenv").config()
+const Utilisateur = require('./database/models/utilisateur.model')
 
 
-const app = express()
+const app = express() //App starts here
+
+const store = new MongoDBStore({  // Création d'une nouvelle instance d'un store pour nos sessions utilisateurs
+    uri: process.env.DB_STRING, // Parametrez votre connexion a la dB dans le fichier .env
+    collection: 'sessions' 
+  });
 
 /* START MIDDLEWARE ⬇ */
 
 app.use(bodyParser.json())
 app.use(cors())
+
+app.use(session({          //Parametrage de la session utilisateur
+    secret: process.env.SECRET, //Parametrez le secret dans votre fichier .env
+    resave: false, 
+    saveUninitialized: false, 
+    store: store})
+)
 
 /* END MIDDLEWARE ⬆ */
 
