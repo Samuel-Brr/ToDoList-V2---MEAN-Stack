@@ -69,8 +69,51 @@ app.post('/inscription', (req,res,next) => {
         res.status(201).send("Utilisateur créé")
       })
   
-  }
-  )
+})
+
+app.post('/connexion',(req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+  
+    // const errors = validationResult(req)
+  
+    // if(!errors.isEmpty()){
+    //   return res.status(422).render('auth/connexion', {
+    //     pageTitle: 'Connexion',
+    //     path: '/auth/connexion',
+    //     errorMessage: errors.array()[0].msg
+    //   });
+    // }
+  
+    Utilisateur.findOne({ email: email })
+        .then(user => {
+          if (!user) {
+            return res.status(422).send("Impossible de trouver l'utilisateur")
+          }
+          bcrypt
+            .compare(password, user.password)
+            .then(doMatch => {
+              if (doMatch) {
+                console.log("çA Match ! 🥳")
+                req.session.isLoggedIn = true;
+                req.session.user = user;
+                return req.session.save(err => {
+                  console.log(err);
+                  res.status(200).send("Utilisateur connecté")
+                });
+              }
+              console.log(user)
+              return res.status(422).send("MdP ou mail faux")
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(422).send(`Erreur serveur: ${err}`);
+            });
+        })
+        .catch(err => console.log(err));
+    })
+
+
 
 //task routes
 app.get('/tasks', (req,res)=>{
