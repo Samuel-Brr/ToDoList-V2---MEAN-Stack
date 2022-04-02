@@ -1,0 +1,1 @@
+Créer une fonction signup dans mon auth store 

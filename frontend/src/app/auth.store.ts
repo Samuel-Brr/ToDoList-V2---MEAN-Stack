@@ -32,6 +32,19 @@ export class AuthStore {
 
     }
 
+
+    signup(email:string, password:string): Observable<User> {
+      return this.http.post<User>("/api/inscription", {email, password})
+          .pipe(
+              tap(user => {
+                  this.subject.next(user);
+                  localStorage.setItem(AUTH_DATA, JSON.stringify(user));
+              }),
+              shareReplay()
+          );
+  }
+
+
     login(email:string, password:string): Observable<User> {
         return this.http.post<User>("/api/login", {email, password})
             .pipe(
