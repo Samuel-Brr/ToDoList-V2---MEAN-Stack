@@ -3,7 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const { mongoose } = require('./database/mongoose')
 const { Task } = require('./database/models/task.model')
-
+const session = require("express-session")
+const MongoDBStore = require("connect-mongodb-session")(session)
 
 
 const app = express()
